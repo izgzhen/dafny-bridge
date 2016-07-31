@@ -1,7 +1,7 @@
-module Request (askDafny, Backend) where
+module Dafny.Request (askDafny, Backend(..)) where
 
 import Network.HTTP
-import Analyze
+import Dafny.Analyze
 
 data Backend = REST
 
@@ -13,7 +13,7 @@ askDafnyREST src = do
                 src
     eRes <- simpleHTTP req
     case eRes of
-        Right res -> return (Right $ analyze (rspBody res))
+        Right res -> Right <$> analyze (rspBody res)
         Left err  -> return (Left $ show err)
 
 askDafny :: Backend -> String -> IO (Either String Report)
