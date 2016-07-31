@@ -1,7 +1,7 @@
-module Dafny.Request (askDafny, Backend(..)) where
+module Language.Dafny.Request (askDafny, Backend(..)) where
 
 import Network.HTTP
-import Dafny.Analyze
+import Language.Dafny.Analyze
 
 data Backend = REST
 

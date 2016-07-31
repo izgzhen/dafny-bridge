@@ -1,4 +1,4 @@
-module Dafny.Analyze where
+module Language.Dafny.Analyze where
 
 import Data.String.Utils
 

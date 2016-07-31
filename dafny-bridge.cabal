@@ -15,8 +15,8 @@ build-type:          Simple
 cabal-version:       >=1.10
 
 library
-  exposed-modules:     Dafny.Request
-                       Dafny.Analyze
+  exposed-modules:     Language.Dafny.Request
+                       Language.Dafny.Analyze
   -- other-modules:       
   -- other-extensions:    
   build-depends:       base >=4.9 && <4.10, HTTP, MissingH
