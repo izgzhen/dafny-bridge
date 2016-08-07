@@ -2,8 +2,12 @@ module Language.Dafny.Request (askDafny, Backend(..)) where
 
 import Network.HTTP
 import Language.Dafny.Analyze
+import System.Process
+import System.IO.Temp
+import System.IO
 
 data Backend = REST
+             | Local FilePath
 
 askDafnyREST :: String -> IO (Either String Report)
 askDafnyREST src = do
@@ -18,3 +22,15 @@ askDafnyREST src = do
 
 askDafny :: Backend -> String -> IO (Either String Report)
 askDafny REST = askDafnyREST
+
+askDafnyLocal :: FilePath -> String -> IO (Either String Report)
+askDafnyLocal binPath src =
+    withSystemTempDirectory "xwidl" $ \fp -> do
+        writeFile fp src
+        (_, Just hout, _, _) <- createProcess (proc "./dafny" [fp])
+                                              { cwd = Just binPath,
+                                                std_out = CreatePipe }
+        s <- hGetContents hout
+        Right <$> (analyze s)
+
+

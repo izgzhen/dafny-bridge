@@ -19,6 +19,6 @@ library
                        Language.Dafny.Analyze
   -- other-modules:       
   -- other-extensions:    
-  build-depends:       base >=4.9 && <4.10, HTTP, MissingH
+  build-depends:       base >=4.9 && <4.10, HTTP, MissingH, temporary, process
   hs-source-dirs:      src
   default-language:    Haskell2010
