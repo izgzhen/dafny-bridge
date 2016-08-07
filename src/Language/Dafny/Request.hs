@@ -27,7 +27,8 @@ askDafny (Local fp) = askDafnyLocal fp
 askDafnyLocal :: FilePath -> String -> IO (Either String Report)
 askDafnyLocal binPath src =
     withSystemTempFile "xwidl.dfy" $ \fp hd -> do
-        hPutStrLn hd src
+        hClose hd
+        writeFile fp src
         (_, Just hout, _, _) <- createProcess (proc "./dafny" ["/nologo", "/compile:0", fp])
                                               { cwd = Just binPath,
                                                 std_out = CreatePipe }

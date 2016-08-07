@@ -3,7 +3,8 @@ module Language.Dafny.Analyze where
 import Data.String.Utils
 
 analyze :: String -> IO Report
-analyze s =
+analyze s = do
+    putStrLn $ "Analyzing: " ++ s
     if startswith "Dafny program verifier finished with" (strip s)
         then return Verified
         else do
