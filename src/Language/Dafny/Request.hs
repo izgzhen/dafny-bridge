@@ -22,12 +22,13 @@ askDafnyREST src = do
 
 askDafny :: Backend -> String -> IO (Either String Report)
 askDafny REST = askDafnyREST
+askDafny (Local fp) = askDafnyLocal fp
 
 askDafnyLocal :: FilePath -> String -> IO (Either String Report)
 askDafnyLocal binPath src =
-    withSystemTempDirectory "xwidl" $ \fp -> do
-        writeFile fp src
-        (_, Just hout, _, _) <- createProcess (proc "./dafny" [fp])
+    withSystemTempFile "xwidl.dfy" $ \fp hd -> do
+        hPutStrLn hd src
+        (_, Just hout, _, _) <- createProcess (proc "./dafny" ["/nologo", "/compile:0", fp])
                                               { cwd = Just binPath,
                                                 std_out = CreatePipe }
         s <- hGetContents hout
