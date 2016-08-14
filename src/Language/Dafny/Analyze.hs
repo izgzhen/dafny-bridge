@@ -9,8 +9,8 @@ analyze s = do
         then return Verified
         else do
             putStrLn $ "Dafny returned failed: " ++ s
-            return Failed
+            return (Failed s)
 
 data Report = Verified
-            | Failed
+            | Failed String
             deriving Show
